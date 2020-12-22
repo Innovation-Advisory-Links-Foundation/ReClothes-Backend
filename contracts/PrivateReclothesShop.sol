@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.0 <=0.7.0;
+pragma solidity >=0.6.0 <0.8.0;
 
 import "./ReclothesShop.sol";
 
@@ -77,7 +77,7 @@ contract PrivateReclothesShop {
         address _regenerationCreditAddress, 
         address _reclothesShopAddress,
         uint[] memory _confidentialPricingList
-    ) public {
+    ) {
         // Setup public SC instance reference.
         resellingCreditInstance = ResellingCredit(_resellingCreditAddress);
         regenerationCreditInstance = RegenerationCredit(_regenerationCreditAddress);
@@ -111,7 +111,7 @@ contract PrivateReclothesShop {
         // Create a Box object.
         Box memory secondHandClothesBox = Box(
             _boxId, 
-            now, // nb. Using "now" here is safe because it's not involved in time constraints operations.
+            block.timestamp, // nb. Using "block.timestamp" here is safe because it's not involved in time constraints operations.
             _clothesTypes.length,
             0, 
             _description, 
@@ -193,7 +193,7 @@ contract PrivateReclothesShop {
             CLOTH_STATUS.UPCYCLED, 
             _description, 
             address(0x0),
-            now,
+            block.timestamp,
             _extClothDataHash
         );
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.0 <=0.7.0;
+pragma solidity >=0.6.0 <0.8.0;
 
 import "./ResellingCredit.sol";
 import "./RegenerationCredit.sol";
@@ -82,7 +82,7 @@ contract ReclothesShop is ReclothesShopRoleManager {
     constructor(
         address _resellingCreditAddress, 
         address _regenerationCreditAddress
-    ) public {
+    ) {
         // Setup the role for the Reclothes Dealer.
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         reclothesDealer = msg.sender;
@@ -121,7 +121,7 @@ contract ReclothesShop is ReclothesShopRoleManager {
         // Create a new Box object.
         Box memory secondHandClothesBox = Box(
             _boxId, 
-            now, // nb. Using "now" here is safe because it's not involved in time constraints operations.
+            block.timestamp, // nb. Using "block.timestamp" here is safe because it's not involved in time constraints operations.
             _clothesTypes.length,
             0,
             _description, 
@@ -353,7 +353,7 @@ contract ReclothesShop is ReclothesShopRoleManager {
             _clothStatus,
             _description, 
             address(0x0),
-            now, // nb. Using "now" here is safe because it's not involved in time constraints operations.
+            block.timestamp, // nb. Using "block.timestamp" here is safe because it's not involved in time constraints operations.
             _extClothDataHash
         );
 
