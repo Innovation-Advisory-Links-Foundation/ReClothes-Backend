@@ -1,0 +1,49 @@
+{
+  "name": "reclothes-backend",
+  "version": "1.0.0",
+  "description": "The official backend of the ReClothes DApp",
+  "scripts": {
+    "ganache": "ganache-cli -a \"$(grep ACCOUNT_NUMBER .env | cut -d '=' -f2)\" -d -m \"$(grep DEV_MNEMONIC .env | cut -d '=' -f2)\"",
+    "compile": "rm -fr build && solhint ./contracts/*.sol --fix && truffle compile",
+    "sc-binary": "solc ./contracts/*.sol --bin --abi --optimize --overwrite -o ./contracts/binary/",
+    "deploy-dev": "truffle deploy --network development",
+    "script-initialize": "truffle exec ./scripts/initializeContracts.js --network besu",
+    "script-public-custs-dealer": "truffle exec ./scripts/customersDealerInteractions.js --network besu",
+    "script-private-rec1-dealer": "truffle exec ./scripts/recycler1DealerPrivateInteractions.js --network besu",
+    "script-private-rec2-dealer": "truffle exec ./scripts/recycler2DealerPrivateInteractions.js --network besu",
+    "test": "truffle test --network development",
+    "lint-js": "eslint ./scripts ./shared ./test ./migrations --fix",
+    "lint-sol": "solhint ./contracts/*.sol --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Innovation-Advisory-Links-Foundation/Ethereum-Backend-Boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Innovation-Advisory-Links-Foundation/Ethereum-Backend-Boilerplate/issues"
+  },
+  "homepage": "https://github.com/Innovation-Advisory-Links-Foundation/Ethereum-Backend-Boilerplate#readme",
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.9",
+    "chai": "^4.2.0",
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.16.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "ganache-cli": "^6.12.1",
+    "solhint": "^3.3.2",
+    "truffle": "^5.1.58"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.3.0",
+    "@truffle/hdwallet-provider": "^1.2.0",
+    "web3-eea": "^0.10.0"
+  }
+}

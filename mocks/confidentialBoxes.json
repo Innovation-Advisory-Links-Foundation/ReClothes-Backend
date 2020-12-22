@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "description": "Two white shirts",
+        "clothesTypes": [5],
+        "quantities": [2]
+    },
+    {
+        "id": 2,
+        "description": "Clothes to recycle!",
+        "clothesTypes": [1, 4, 3],
+        "quantities": [1, 1, 1]
+    },
+    {
+        "id": 3,
+        "description": "My pair of jeans",
+        "clothesTypes": [2],
+        "quantities": [2]
+    },
+    {
+        "id": 4,
+        "description": "Worst clothes ever!",
+        "clothesTypes": [4, 3],
+        "quantities": [1, 1]
+    }
+]

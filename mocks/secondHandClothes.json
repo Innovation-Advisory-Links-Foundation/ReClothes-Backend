@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "price": 75,
+        "clothType": 1,
+        "size": 3,
+        "description": "A near mint vintage T-Shirt",
+        "_extClothDataHash": "0xBC607DC753DF0A80E5A556A6148C58133926EA5946C94B5AB5D4BD85662C353E"
+    },
+    {
+        "id": 2,
+        "price": 75,
+        "clothType": 4,
+        "size": 1,
+        "description": "A beautiful white dress",
+        "_extClothDataHash": "0x13936FF20D15DC0305D8845D81162DC7370118D849A5737A3BCB8716C55DC1D8"
+    }
+]

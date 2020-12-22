@@ -1,0 +1,18 @@
+[
+    {
+        "id": 10,
+        "price": 35,
+        "clothType": 5,
+        "size": 1,
+        "description": "An upcycled vintage shirt",
+        "extClothDataHash": "0x56201748E9B3632C84AB5E413600EDB4AC8D04A10B8441CC3FC0EAC321BB93A4"
+    },
+    {
+        "id": 20,
+        "price": 45,
+        "clothType": 5,
+        "size": 3,
+        "description": "An upcycled formal shirt",
+        "extClothDataHash": "0x56201748E9B3632C84AB5E413600EDB4AC8D04A10B8441CC3FC0EAC321BB93A4"
+    }
+]
