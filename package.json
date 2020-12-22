@@ -5,8 +5,7 @@
   "scripts": {
     "ganache": "ganache-cli -a \"$(grep ACCOUNT_NUMBER .env | cut -d '=' -f2)\" -d -m \"$(grep DEV_MNEMONIC .env | cut -d '=' -f2)\"",
     "compile": "rm -fr build && solhint ./contracts/*.sol --fix && truffle compile",
-    "sc-binary": "solc ./contracts/*.sol --bin --abi --optimize --overwrite -o ./contracts/binary/",
-    "deploy-dev": "truffle deploy --network development",
+    "generate-sc-binaries": "solcjs --bin --base-path . ./contracts/*.sol  --abi --optimize --overwrite -o ./contracts/binaries/",
     "script-initialize": "truffle exec ./scripts/initializeContracts.js --network besu",
     "script-public-custs-dealer": "truffle exec ./scripts/customersDealerInteractions.js --network besu",
     "script-private-rec1-dealer": "truffle exec ./scripts/recycler1DealerPrivateInteractions.js --network besu",
@@ -39,7 +38,8 @@
     "eslint-plugin-standard": "^5.0.0",
     "ganache-cli": "^6.12.1",
     "solhint": "^3.3.2",
-    "truffle": "^5.1.58"
+    "truffle": "^5.1.58",
+    "solc": "0.7.5"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^3.3.0",

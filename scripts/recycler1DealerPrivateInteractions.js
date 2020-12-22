@@ -20,7 +20,7 @@ const mockedUpcycledClothes = require('../mocks/upcycledClothes.json')
 const PrivateReclothesShopAbi = require('../build/contracts/PrivateReclothesShop.json').abi
 
 const PrivateReclothesShopBinary = fs.readFileSync(
-  path.join(__dirname, '../contracts/binary/PrivateReclothesShop.bin'),
+  path.join(__dirname, '../contracts/binaries/_contracts_PrivateReclothesShop_sol_PrivateReclothesShop.bin'),
 )
 
 // Nodes keys.
