@@ -1,5 +1,5 @@
 /**
-  * Return the private smart contract address.
+  * Return the private deployed smart contract address.
   * @param {Object} web3EEA The instance of the Web3 library using the EEAClient for connecting to a node.
   * @param {string} transactionHash The transaction hash of the deploy transaction.
   * @param {string} orionPublicKey The public key which identifies the specific orion node.
@@ -14,11 +14,11 @@ const getPrivateContractAddress = (web3EEA, transactionHash, orionPublicKey) => 
 }
 
 /**
-  * Return the private transaction receipt from a tx hash.
+  * Return the private transaction receipt from a provided private transaction hash.
   * @param {Object} web3EEA The instance of the Web3 library using the EEAClient for connecting to a node.
   * @param {string} transactionHash The transaction hash of the deploy transaction.
   * @param {string} orionPublicKey The public key which identifies the specific orion node.
-  * @returns {object} The tx receipt of the transaction.
+  * @returns {object} The private transaction receipt.
   */
 const getPrivateTransactionReceipt = (web3EEA, transactionHash, orionPublicKey) => {
   return web3EEA.priv
@@ -29,17 +29,17 @@ const getPrivateTransactionReceipt = (web3EEA, transactionHash, orionPublicKey) 
 }
 
 /**
-  * Send a second-hand box in a confidential privacy group between two nodes.
+  * Send a confidential second-hand box.
   * @param {Object} web3EEA The instance of the Web3 library using the EEAClient for connecting to a node.
   * @param {Object} PrivateReclothesShopAbi The set of ABI fo the PrivateReclothesShop smart contract.
   * @param {string} privateFrom The public key which identifies the sender orion node.
   * @param {string} privateFor The public key which identifies the receiver orion node.
   * @param {string} privateKey The private key of the besu node associated to the privateFrom orion node.
   * @param {string} contractAddress The address of the PrivateReclothesShop smart contract.
-  * @param {string} boxId The unique id which identifies the box.
-  * @param {string} description A short description of the box.
-  * @param {Array} clothesTypes A list indicating the types of clothes inside the box.
-  * @param {Array} quantities A list indicating the quantities of clothes for each type inside the box.
+  * @param {string} boxId The unique numeric id used for identifying the box.
+  * @param {string} description A short description of the box content.
+  * @param {Array} clothesTypes The clothes types which are contained in the box.
+  * @param {Array} quantities A quantity for each cloth type contained in the box.
   * @returns {object} Returns the result of the function call.
   */
 const sendBoxForEvaluation = (
@@ -72,15 +72,15 @@ const sendBoxForEvaluation = (
 }
 
 /**
-  * Evaluate second-hand box in a confidential privacy group between two nodes.
+  * Evaluate a second-hand confidential box.
   * @param {Object} web3EEA The instance of the Web3 library using the EEAClient for connecting to a node.
   * @param {Object} PrivateReclothesShopAbi The set of ABI fo the PrivateReclothesShop smart contract.
   * @param {string} privateFrom The public key which identifies the sender orion node.
   * @param {string} privateFor The public key which identifies the receiver orion node.
   * @param {string} privateKey The private key of the besu node associated to the privateFrom orion node.
   * @param {string} contractAddress The address of the PrivateReclothesShop smart contract.
-  * @param {string} boxId The unique id which identifies the box.
-  * @param {Number} extraAmountRGC An extra amount of RGC tokens ad additional reward for the Dealer.
+  * @param {string} boxId The unique numeric id used for identifying the box.
+  * @param {Number} extraAmountRGC An additional remuneration in RGC tokens for the box sender.
   * @returns {object} Returns the result of the function call.
   */
 const evaluateBox = (
@@ -111,19 +111,19 @@ const evaluateBox = (
 }
 
 /**
-  * Sell a new upcycled cloth in a confidential privacy group between two nodes.
+  * Sell a new upcycled cloth confidentially to the Dealer.
   * @param {Object} web3EEA The instance of the Web3 library using the EEAClient for connecting to a node.
   * @param {Object} PrivateReclothesShopAbi The set of ABI fo the PrivateReclothesShop smart contract.
   * @param {string} privateFrom The public key which identifies the sender orion node.
   * @param {string} privateFor The public key which identifies the receiver orion node.
   * @param {string} privateKey The private key of the besu node associated to the privateFrom orion node.
   * @param {string} contractAddress The address of the PrivateReclothesShop smart contract.
-  * @param {string} clothId The unique id which identifies the cloth.
-  * @param {Number} rscPrice The price expressed as an amount of RSC.
-  * @param {Number} clothType The type of the cloth to put on sale.
-  * @param {Number} clothSize The size of the cloth to put on sale.
+  * @param {string} clothId The unique numeric id used for identifying the SaleableCloth.
+  * @param {Number} rscPrice The price of the SaleableCloth expressed in RSC tokens.
+  * @param {Number} clothType The type of cloth to sell.
+  * @param {Number} clothSize The size of cloth to sell.
   * @param {String} description A short description of the cloth.
-  * @param {String} extClothDataHash A hash of the external data related to the cloth.
+  * @param {String} extClothDataHash A hash of external information related to the dress to sell (e.g., link to the cloth photo).
   * @returns {object} Returns the result of the function call.
   */
 const sellUpcycledCloth = (
@@ -165,7 +165,7 @@ const sellUpcycledCloth = (
   * @param {string} privateFor The public key which identifies the receiver orion node.
   * @param {string} privateKey The private key of the besu node associated to the privateFrom orion node.
   * @param {string} contractAddress The address of the PrivateReclothesShop smart contract.
-  * @param {string} clothId The unique id which identifies the cloth.
+  * @param {string} clothId The unique numeric id used for identifying the SaleableCloth.
   * @returns {object} Returns the result of the function call.
   */
 const buyCloth = (

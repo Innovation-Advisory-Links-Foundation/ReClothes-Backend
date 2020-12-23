@@ -4,12 +4,10 @@ const colors = require('colors')
 const SharedUtils = require('../shared/utils')
 
 async function main () {
-  // Initialize test utilities class.
+  // Initialize utility class.
   await SharedUtils.init(web3)
 
-  // Get the default transaction parameters.
   this.transactionParameters = SharedUtils.getTransactionParameters()
-  // Get the besu accounts.
   this.accounts = SharedUtils.getBesuAccounts()
 
   // Create a new ResellingCredit SC instance from TokenManager account.
@@ -77,10 +75,10 @@ async function main () {
   })
   console.log(`\n${colors.green('Done!')}`)
 
-  console.log(`\n${colors.white('Transfer 1000000 RGC Tokens to Recycler1')}`)
+  console.log(`\n${colors.white('Transfer 500000 RGC Tokens to Recycler1')}`)
   await this.regenerationCreditInstance.methods.transfer(
     this.accounts.recycler1,
-    1000000,
+    500000,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.tokenManager,
@@ -96,10 +94,10 @@ async function main () {
   })
   console.log(`\n${colors.green('Done!')}`)
 
-  console.log(`\n${colors.white('Transfer 1000000 RGC Tokens to Recycler2')}`)
+  console.log(`\n${colors.white('Transfer 500000 RGC Tokens to Recycler2')}`)
   await this.regenerationCreditInstance.methods.transfer(
     this.accounts.recycler2,
-    1000000,
+    500000,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.tokenManager,

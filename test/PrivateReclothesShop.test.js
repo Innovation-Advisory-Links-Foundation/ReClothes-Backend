@@ -56,7 +56,7 @@ contract('Private Reclothes Shop', () => {
       this.reclothesDealer,
     )
 
-    // Mock interactions for initializing the public ReclothesShop smart contract
+    /** Mock interactions for initializing the public ReclothesShop smart contract */
 
     // Transfer RSC Tokens from Token Manager to Reclothes Dealer.
     await this.resellingCreditInstance.methods.transfer(

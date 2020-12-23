@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "price": 75,
+        "price": 27,
         "clothType": 1,
         "size": 3,
         "description": "A near mint vintage T-Shirt",
@@ -9,10 +9,26 @@
     },
     {
         "id": 2,
-        "price": 75,
+        "price": 40,
         "clothType": 4,
         "size": 1,
-        "description": "A beautiful white dress",
+        "description": "A beautiful second-hand dress",
         "_extClothDataHash": "0x13936FF20D15DC0305D8845D81162DC7370118D849A5737A3BCB8716C55DC1D8"
+    },
+    {
+        "id": 3,
+        "price": 20,
+        "clothType": 2,
+        "size": 4,
+        "description": "A comfortable pair of jeans",
+        "_extClothDataHash": "0xF0C774A03163EDDB85A2298BB2A19FF54C6EE75C881D3FF1849F94C83D1AC396"
+    },
+    {
+        "id": 4,
+        "price": 30,
+        "clothType": 0,
+        "size": 0,
+        "description": "A snapback from the last collection",
+        "_extClothDataHash": "0x1C55D9B826E8DFA994370E306AE8DC2E849F3E003381DC848A0B95F782C0C0E3"
     }
 ]

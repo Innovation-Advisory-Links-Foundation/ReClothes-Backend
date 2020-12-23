@@ -12,30 +12,25 @@ const {
   buyCloth,
 } = require('../shared/privacyGroupHelpers')
 
-// Get all mocked boxes.
-const mockedPrivateBoxes = require('../mocks/confidentialBoxes.json')
-// Get all mocked clothes.
+const mockedDealerBoxes = require('../mocks/dealerBoxes.json')
 const mockedUpcycledClothes = require('../mocks/upcycledClothes.json')
 
 const PrivateReclothesShopAbi = require('../build/contracts/PrivateReclothesShop.json').abi
-
 const PrivateReclothesShopBinary = fs.readFileSync(
   path.join(__dirname, '../contracts/binaries/_contracts_PrivateReclothesShop_sol_PrivateReclothesShop.bin'),
 )
 
-// Nodes keys.
+// Orion nodes keys.
 const orion1PubKey = process.env.ORION1_PUBLIC_KEY
 const orion2PubKey = process.env.ORION2_PUBLIC_KEY
 const node1PrivKey = process.env.NODE1_PRIVATE_KEY
 const node2PrivKey = process.env.NODE2_PRIVATE_KEY
 
 async function main () {
-  // Initialize test utilities class.
+  // Initialize utility class.
   await SharedUtils.init(web3)
 
-  // Get the default transaction parameters.
   this.transactionParameters = SharedUtils.getTransactionParameters()
-  // Get the besu accounts.
   this.accounts = SharedUtils.getBesuAccounts()
 
   console.log(`\n${colors.yellow('Gathering Public Smart Contract Istances')}`)
@@ -51,12 +46,13 @@ async function main () {
   // eslint-disable-next-line no-new
   const contract = new web3EEANode1.eth.Contract(PrivateReclothesShopAbi)
 
-  // create PrivateReclothesShop constructor
+  // Retrieve the contructor from PrivateReclothesShop smart contract ABI.
   // eslint-disable-next-line no-underscore-dangle
   const constructorAbi = contract._jsonInterface.find(e => {
     return e.type === 'constructor'
   })
 
+  // Fill in the constructor arguments for private deploy.
   const constructorArgs = web3EEANode1.eth.abi
     .encodeParameters(constructorAbi.inputs, [
       process.env.RESELLING_ADDRESS,
@@ -65,6 +61,7 @@ async function main () {
       [3, 5, 8, 16, 9, 11], // Confidential pricing list.
     ]).slice(2)
 
+  // Setup options for private deploy.
   const contractOptions = {
     data: `0x${PrivateReclothesShopBinary}${constructorArgs}`,
     privateFrom: orion1PubKey,
@@ -73,23 +70,20 @@ async function main () {
   }
   console.log(`\n${colors.green('Done!')}`)
 
-  console.log(`\n${colors.yellow('Deploy Private SC for Dealer - Recycler1')}`)
+  console.log(`\n${colors.yellow('Deploy PrivateReclothesShop smart contract (Dealer - Recycler1)')}`)
   web3EEANode1.eea
-  // Contract deploy.
     .sendRawTransaction(contractOptions)
     .then(hash => {
       console.log(`Transaction Hash ${hash}`)
       return web3EEANode1.priv.getTransactionReceipt(hash, orion1PubKey)
     })
     .then(privateTransactionReceipt => {
-    // console.log("Private Transaction Receipt");
-    // console.log(privateTransactionReceipt);
       console.log(`\n${colors.green('Done!')}`)
       return privateTransactionReceipt.contractAddress
     })
     .then(contractAddress => {
       console.log(`\n${colors.green('PrivateReclothesShop SC Address')} -> (${colors.magenta(contractAddress)})`)
-      // Interactions.
+
       console.log(`\n${colors.yellow('Send Confidential Box for Evaluation')}`)
       return sendBoxForEvaluation(
         web3EEANode1,
@@ -98,18 +92,18 @@ async function main () {
         orion2PubKey,
         node1PrivKey,
         contractAddress,
-        mockedPrivateBoxes[0].id,
-        mockedPrivateBoxes[0].description,
-        mockedPrivateBoxes[0].clothesTypes,
-        mockedPrivateBoxes[0].quantities,
+        mockedDealerBoxes[0].id,
+        mockedDealerBoxes[0].description,
+        mockedDealerBoxes[0].clothesTypes,
+        mockedDealerBoxes[0].quantities,
       )
         .then(transactionHash => {
           console.log(`\n${colors.green('Done!')}`)
-          // Tx public.
+          // Public interaction (ReclothesShop).
           console.log(`\n${colors.yellow('Remove Clothes from Inventory')}`)
           return this.reclothesShopInstance.methods.decreaseStockForConfidentialBox(
-            mockedPrivateBoxes[0].clothesTypes,
-            mockedPrivateBoxes[0].quantities,
+            mockedDealerBoxes[0].clothesTypes,
+            mockedDealerBoxes[0].quantities,
             transactionHash,
           ).send({
             ...this.transactionParameters,
@@ -126,12 +120,12 @@ async function main () {
             orion1PubKey,
             node2PrivKey,
             contractAddress,
-            mockedPrivateBoxes[0].id,
+            mockedDealerBoxes[0].id,
             15,
           )
             .then(transactionHash => {
               console.log(`\n${colors.green('Done!')}`)
-              // Tx public.
+              // Public interaction (ReclothesShop).
               console.log(`\n${colors.yellow('Set RGC Tokens Allowance for ReclothesShop SC')}`)
               return this.regenerationCreditInstance.methods.increaseAllowance(
                 this.reclothesShopInstance._address,
@@ -141,7 +135,7 @@ async function main () {
                 from: this.accounts.recycler1,
               })
                 .then(() => {
-                  // Tx public.
+                  // Public interaction (ReclothesShop).
                   console.log(`\n${colors.yellow('Transfer the RGC Tokens')}`)
                   return this.reclothesShopInstance.methods.transferRGCForConfidentialTx(
                     37,
@@ -203,7 +197,7 @@ async function main () {
           )
             .then((transactionHash) => {
               console.log(`\n${colors.green('Done!')}`)
-              // Tx public.
+              // Public interaction (ReclothesShop).
               console.log(`\n${colors.yellow('Set RSC Tokens Allowance for ReclothesShop SC')}`)
               return this.resellingCreditInstance.methods.increaseAllowance(
                 this.reclothesShopInstance._address,
@@ -213,7 +207,7 @@ async function main () {
                 from: this.accounts.reclothesDealer,
               })
                 .then(() => {
-                  // Tx public.
+                  // Public interaction (ReclothesShop).
                   console.log(`\n${colors.yellow('Transfer the RSC Tokens')}`)
                   return this.reclothesShopInstance.methods.transferRSCForConfidentialTx(
                     this.accounts.recycler1,
@@ -224,7 +218,7 @@ async function main () {
                     from: this.accounts.reclothesDealer,
                   })
                     .then(() => {
-                      // Tx public.
+                      // Public interaction (ReclothesShop).
                       console.log(`\n${colors.yellow('Sell Upcycled Cloth for Customers')}`)
                       return this.reclothesShopInstance.methods.sellUpcycledCloth(
                         mockedUpcycledClothes[0].id,

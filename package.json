@@ -9,10 +9,10 @@
     "compile": "rm -fr build && solhint ./contracts/*.sol --fix && truffle compile",
     "solcjs-binaries": "solcjs --bin --base-path . ./contracts/*.sol  --abi --optimize --overwrite -o ./contracts/binaries/",
     "test": "truffle test --network development",
-    "script-initialize": "truffle exec ./scripts/initializeContracts.js --network besu",
-    "script-public-custs-dealer": "truffle exec ./scripts/customersDealerInteractions.js --network besu",
-    "script-private-rec1-dealer": "truffle exec ./scripts/recycler1DealerPrivateInteractions.js --network besu",
-    "script-private-rec2-dealer": "truffle exec ./scripts/recycler2DealerPrivateInteractions.js --network besu"
+    "initialize-reclothes": "truffle exec ./scripts/initializeReclothes.js --network besu",
+    "mock-public-interactions": "truffle exec ./scripts/mockPublicInteractions.js --network besu",
+    "mock-private-interactions1": "truffle exec ./scripts/mockPrivateInteractions1.js --network besu",
+    "mock-private-interactions2": "truffle exec ./scripts/mockPrivateInteractions2.js --network besu"
   },
   "repository": {
     "type": "git",

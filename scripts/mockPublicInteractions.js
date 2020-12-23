@@ -2,22 +2,16 @@ require('dotenv').config()
 require('web3')
 const colors = require('colors')
 const SharedUtils = require('../shared/utils')
-
-// Get all mocked boxes.
-const mockedPublicBoxes = require('../mocks/publicBoxes.json')
-// Get all mocked second-hand clothes.
+const mockedCustomerBoxes = require('../mocks/customerBoxes.json')
 const mockedSecondHandClothes = require('../mocks/secondHandClothes.json')
 
 async function main () {
-  // Initialize test utilities class.
+  // Initialize utility class.
   await SharedUtils.init(web3)
 
-  // Get the default transaction parameters.
   this.transactionParameters = SharedUtils.getTransactionParameters()
-  // Get the besu accounts.
   this.accounts = SharedUtils.getBesuAccounts()
 
-  // Retrieve SC istances.
   console.log(`\n${colors.yellow('Gathering Smart Contract Istances')}`)
   this.resellingCreditInstance = SharedUtils.getResellingCreditSCObject().getInstance(process.env.RESELLING_ADDRESS)
   this.regenerationCreditInstance = SharedUtils.getRegenerationCreditSCObject().getInstance(process.env.REGENERATION_ADDRESS)
@@ -26,20 +20,12 @@ async function main () {
 
   console.log(`\n${colors.yellow('Smart Contract Method Interactions')}`)
 
-  // Prepare mocked data.
-  // Boxes.
-  const firstBox = mockedPublicBoxes[0]
-  const secondBox = mockedPublicBoxes[1]
-  const thirdBox = mockedPublicBoxes[2]
-  // Second-hand Clothes.
-  const firstSecondHandCloth = mockedSecondHandClothes[0]
-
   console.log(`\n${colors.white('Send a box for evaluation (Customer1)')}`)
   await this.reclothesShopInstance.methods.sendBoxForEvaluation(
-    firstBox.id,
-    firstBox.description,
-    firstBox.clothesTypes,
-    firstBox.quantities,
+    mockedCustomerBoxes[0].id,
+    mockedCustomerBoxes[0].description,
+    mockedCustomerBoxes[0].clothesTypes,
+    mockedCustomerBoxes[0].quantities,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.customer1,
@@ -58,7 +44,7 @@ async function main () {
 
   console.log(`\n${colors.white('Evaluate the box')}`)
   await this.reclothesShopInstance.methods.evaluateBox(
-    firstBox.id,
+    mockedCustomerBoxes[0].id,
     50,
   ).send({
     ...this.transactionParameters,
@@ -68,12 +54,12 @@ async function main () {
 
   console.log(`\n${colors.white('Sell Second-Hand Cloth')}`)
   await this.reclothesShopInstance.methods.sellSecondHandCloth(
-    firstSecondHandCloth.id,
-    firstSecondHandCloth.price,
-    firstSecondHandCloth.clothType,
-    firstSecondHandCloth.size,
-    firstSecondHandCloth.description,
-    firstSecondHandCloth._extClothDataHash,
+    mockedSecondHandClothes[0].id,
+    mockedSecondHandClothes[0].price,
+    mockedSecondHandClothes[0].clothType,
+    mockedSecondHandClothes[0].size,
+    mockedSecondHandClothes[0].description,
+    mockedSecondHandClothes[0]._extClothDataHash,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.reclothesDealer,
@@ -82,10 +68,10 @@ async function main () {
 
   console.log(`\n${colors.white('Send a box for evaluation (Customer2)')}`)
   await this.reclothesShopInstance.methods.sendBoxForEvaluation(
-    secondBox.id,
-    secondBox.description,
-    secondBox.clothesTypes,
-    secondBox.quantities,
+    mockedCustomerBoxes[1].id,
+    mockedCustomerBoxes[1].description,
+    mockedCustomerBoxes[1].clothesTypes,
+    mockedCustomerBoxes[1].quantities,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.customer2,
@@ -96,7 +82,7 @@ async function main () {
   console.log(`\n${colors.white('Increase ReclothesShop SC allowance from Reclothes Dealer')}`)
   await this.resellingCreditInstance.methods.increaseAllowance(
     this.reclothesShopInstance._address,
-    200,
+    210,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.reclothesDealer,
@@ -104,7 +90,7 @@ async function main () {
 
   console.log(`\n${colors.white('Evaluate the box')}`)
   await this.reclothesShopInstance.methods.evaluateBox(
-    secondBox.id,
+    mockedCustomerBoxes[1].id,
     25,
   ).send({
     ...this.transactionParameters,
@@ -114,10 +100,10 @@ async function main () {
 
   console.log(`\n${colors.white('Send a box for evaluation (Customer1)')}`)
   await this.reclothesShopInstance.methods.sendBoxForEvaluation(
-    thirdBox.id,
-    thirdBox.description,
-    thirdBox.clothesTypes,
-    thirdBox.quantities,
+    mockedCustomerBoxes[2].id,
+    mockedCustomerBoxes[2].description,
+    mockedCustomerBoxes[2].clothesTypes,
+    mockedCustomerBoxes[2].quantities,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.customer1,
@@ -136,10 +122,52 @@ async function main () {
 
   console.log(`\n${colors.white('Buy the Second-Hand Cloth (Customer 2)')}`)
   await this.reclothesShopInstance.methods.buyCloth(
-    firstSecondHandCloth.id,
+    mockedSecondHandClothes[0].id,
   ).send({
     ...this.transactionParameters,
     from: this.accounts.customer2,
+  })
+  console.log(`\n${colors.green('Done!')}`)
+
+  console.log(`\n${colors.white('Sell Second-Hand Cloth')}`)
+  await this.reclothesShopInstance.methods.sellSecondHandCloth(
+    mockedSecondHandClothes[1].id,
+    mockedSecondHandClothes[1].price,
+    mockedSecondHandClothes[1].clothType,
+    mockedSecondHandClothes[1].size,
+    mockedSecondHandClothes[1].description,
+    mockedSecondHandClothes[1]._extClothDataHash,
+  ).send({
+    ...this.transactionParameters,
+    from: this.accounts.reclothesDealer,
+  })
+  console.log(`\n${colors.green('Done!')}`)
+
+  console.log(`\n${colors.white('Sell Second-Hand Cloth')}`)
+  await this.reclothesShopInstance.methods.sellSecondHandCloth(
+    mockedSecondHandClothes[2].id,
+    mockedSecondHandClothes[2].price,
+    mockedSecondHandClothes[2].clothType,
+    mockedSecondHandClothes[2].size,
+    mockedSecondHandClothes[2].description,
+    mockedSecondHandClothes[2]._extClothDataHash,
+  ).send({
+    ...this.transactionParameters,
+    from: this.accounts.reclothesDealer,
+  })
+  console.log(`\n${colors.green('Done!')}`)
+
+  console.log(`\n${colors.white('Sell Second-Hand Cloth')}`)
+  await this.reclothesShopInstance.methods.sellSecondHandCloth(
+    mockedSecondHandClothes[3].id,
+    mockedSecondHandClothes[3].price,
+    mockedSecondHandClothes[3].clothType,
+    mockedSecondHandClothes[3].size,
+    mockedSecondHandClothes[3].description,
+    mockedSecondHandClothes[3]._extClothDataHash,
+  ).send({
+    ...this.transactionParameters,
+    from: this.accounts.reclothesDealer,
   })
   console.log(`\n${colors.green('Done!')}`)
 
