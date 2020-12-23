@@ -4,15 +4,15 @@
   "description": "The official backend of the ReClothes DApp",
   "scripts": {
     "ganache": "ganache-cli -a \"$(grep ACCOUNT_NUMBER .env | cut -d '=' -f2)\" -d -m \"$(grep DEV_MNEMONIC .env | cut -d '=' -f2)\"",
+    "eslint": "eslint ./scripts ./shared ./test ./migrations --fix",
+    "solhint": "solhint ./contracts/*.sol --fix",
     "compile": "rm -fr build && solhint ./contracts/*.sol --fix && truffle compile",
-    "generate-sc-binaries": "solcjs --bin --base-path . ./contracts/*.sol  --abi --optimize --overwrite -o ./contracts/binaries/",
+    "solcjs-binaries": "solcjs --bin --base-path . ./contracts/*.sol  --abi --optimize --overwrite -o ./contracts/binaries/",
+    "test": "truffle test --network development",
     "script-initialize": "truffle exec ./scripts/initializeContracts.js --network besu",
     "script-public-custs-dealer": "truffle exec ./scripts/customersDealerInteractions.js --network besu",
     "script-private-rec1-dealer": "truffle exec ./scripts/recycler1DealerPrivateInteractions.js --network besu",
-    "script-private-rec2-dealer": "truffle exec ./scripts/recycler2DealerPrivateInteractions.js --network besu",
-    "test": "truffle test --network development",
-    "lint-js": "eslint ./scripts ./shared ./test ./migrations --fix",
-    "lint-sol": "solhint ./contracts/*.sol --fix"
+    "script-private-rec2-dealer": "truffle exec ./scripts/recycler2DealerPrivateInteractions.js --network besu"
   },
   "repository": {
     "type": "git",
