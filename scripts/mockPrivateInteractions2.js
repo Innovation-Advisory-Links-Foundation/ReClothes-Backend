@@ -36,7 +36,7 @@ async function main () {
   this.reclothesShopInstance = SharedUtils.getReclothesShopSCObject().getInstance(process.env.RECLOTHES_SHOP_ADDRESS)
   console.log(`\n${colors.green('Done!')}`)
 
-  console.log(`\n${colors.yellow('Initialize Orion1-Orion2 Privacy Group')}`)
+  console.log(`\n${colors.yellow('Initialize Orion1-Orion3 Privacy Group')}`)
   const web3EEANode1 = new EEAClient(new Web3(process.env.NODE1_URL), process.env.CHAIN_ID)
   const web3EEANode3 = new EEAClient(new Web3(process.env.NODE3_URL), process.env.CHAIN_ID)
 
@@ -67,7 +67,7 @@ async function main () {
   }
   console.log(`\n${colors.green('Done!')}`)
 
-  console.log(`\n${colors.yellow('Deploy Private SC for Dealer - Recycler1')}`)
+  console.log(`\n${colors.yellow('Deploy Private SC for Dealer - Recycler2')}`)
   web3EEANode1.eea
     .sendRawTransaction(contractOptions)
     .then(hash => {
