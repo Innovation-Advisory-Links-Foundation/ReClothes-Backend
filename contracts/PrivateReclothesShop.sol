@@ -82,13 +82,9 @@ contract PrivateReclothesShop {
      * @notice Deploy a new instance of Private ReclothesShop smart contract.
      * @param _resellingCreditAddress The address of the ResellingCredit smart contract.
      * @param _regenerationCreditAddress The address of the RegenerationCredit smart contract.
+     * @param _reclothesShopAddress The address of the public ReclothesShop smart contract.
+     * @param _confidentialPricingList The list of confidential evaluation prices in RGC tokens for each cloth type.
      */
-
-    /// @notice Deploy a new Private Reclothes Shop smart contract for confidential interactions between Recycler and Reclothes Dealer.
-    /// @param _resellingCreditAddress The address of the publicly deployed ResellingCredit smart contract.
-    /// @param _regenerationCreditAddress The address of the publicly deployed RegenerationCredit smart contract.
-    /// @param _reclothesShopAddress The address of the publicly deployed ReclothesShop smart contract.
-    /// @param _confidentialPricingList A list of confidential evaluation prices in RGC tokens for each cloth type.
     constructor(
         address _resellingCreditAddress, 
         address _regenerationCreditAddress, 
