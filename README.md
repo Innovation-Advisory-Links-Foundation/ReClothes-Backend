@@ -1,4 +1,4 @@
-# ReClothes
+# ReClothes
 
 **A decentralized solution for second-hand clothes recycle in the fashion industry.**
 
