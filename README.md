@@ -1,82 +1,33 @@
-# ReClothes Backend
-Build decentralized applications (*dApps*) on top of the Ethereum blockchain using the latest *bleeding-edge* technologies and tools to accelerate the development process with a reliable, modern, fast, and customizable approach.
+# ReClothes
 
-You can find a simple decentralized Crowdfunding dApp example built using this boilerplate on branch `example`.
+**A decentralized solution for second-hand clothes recycle in the fashion industry.**
 
+* Designed as an enterprise blockchain-based network on [Hyperledger Besu](https://besu.hyperledger.org/en/stable/).
+* Allows **confidential** transactions visible only among business partners while keeping a transparent public history of quantities, processes, events, and payments.
+* Encourages individuals' participation in the circular economy through a *double-incentive* using two [ERC20](https://docs.openzeppelin.com/contracts/erc20) token implementations, automating payments and rewarding mechanisms.
+* Provides a *public* interface for people who wants to support the eco-friendly fashion industry by sending second-hand clothes and/or buying upcycled clothes.
 
-## Table of Contents
-- [What is an Ethereum dApp?](#what-is-an-ethereum-dapp)
-- [What is Included?](#what-is-included)
-- [Folder Structure](#folder-structure)
-- [Getting Started](#getting-started)
-    - [Prerequisities](#prerequisities)
-    - [Initialization](#initialization)
-    - [Local Usage](#local-usage)
-    - [Public Network Usage](#public-network-usage)
-- [Development Rules](#development-rules)
-    - [Commit](#commit)
-    - [Branch](#branch)
-- [License](#license)
+You can learn more about the main challenges of the fashion sector and our solution's design to the article on our [OverTheBlock Medium](https://medium.com/overtheblock/reclothes-a-blockchain-based-solution-for-second-hand-clothes-market-ca2061080e3c) page.
 
-### What is an Ethereum dApp?
-*DApp* (or *dApp*) is an abbreviated form for Decentralized Application, a computer application that runs on a distributed computing system. 
+To learn more about ReClothes smart contracts, check the [README](https://github.com/Innovation-Advisory-Links-Foundation/ReClothes-Backend/blob/main/contracts/README.md) in the `/contracts` folder.
 
-In a classical software application approach, the code runs on centralized servers (e.g., AWS or NodeJS). However, in a full-decentralized process, the dApp has its backend code running on a decentralized peer-to-peer network (e.g., Ethereum Blockchain smart contracts) as well as its frontend application running on a decentralized storage system (e.g., Swarm or IPFS). The frontend calls the backend blockchain nodes directly through RPC endpoints.
+## Workflow
 
 <div align="center">
     <img 
         align="center" 
-        src="./resources/Ethereum_dApp_architecture.png" 
-        alt="An overview of an Ethereum dApp Architecture"
+        src="./workflow.svg" 
+        alt="An high-level representation of ReClothes solution workflow"
     />
     </div>
-<p align="center"> <i>Figure 1.</i> An overview of an Ethereum dApp Architecture. </p>
+<p align="center"> <i>Figure 1.</i> A high-level representation of ReClothes solution workflow </p>
 
-This repository is focused on help you deploying, testing, and populating the smart contract (SC) business logic of your application in a local and remote (public networks) environment.
+Figure 1 shows a high-level representation of the actors and the workflow of their features in ReClothes. The designed solution involves three different actors: 
+* **ReClothes Dealer**: who represents a company operating in the fashion market, 
+* **Recyclers**: who represents companies or entities which are involved in commercial relationships regarding clothes recycling activities and,
+* **Customers**: who represents people interested in sending second-hand clothes and/or buying upcycled clothes.
 
-
-### What is Included?
-Your environment will have everything you need to build a modern Ethereum dApp backend:
-
-* A development environment, testing framework, and asset pipeline for the Ethereum Virtual Machine (EVM). [[Truffle](https://github.com/trufflesuite/truffle)]
-* A well-written set of Ethereum JavaScript API connects to the Generic JSON-RPC spec used to communicate with the nodes of an Ethereum-like blockchain. [[web3js](https://github.com/ethereum/web3.js/)]
-* A personal blockchain node and a CLI to interact with it. [[Ganache](https://github.com/trufflesuite/ganache)]
-* A set of smart contract standard libraries that help you to minimize development risk. [[OZ Contracts](https://openzeppelin.com/contracts/)]
-* Assertion libraries for smart contract testing. [[OZ TestHelpers](https://docs.openzeppelin.com/test-helpers/0.5/), [Chai](https://www.chaijs.com/)]
-* Linters for statical analysis of your JavaScript and Solidity code. [[ESLint](https://eslint.org/), [SolHint](https://protofire.github.io/solhint/)]
-
-## Folder Structure
-```
-├── contracts
-│   ├── Migration.sol
-│   └── MyContract.sol
-├── migrations
-│   ├── 1_initial_migration.js
-│   └── 2_myContract_migration.js
-├── mocks
-│   └── mock.json 
-├── scripts
-│   └── script.js 
-├── shared
-│   └── utils.js 
-├── test
-│   └── myContract.test.js 
-├── truffle-config.js
-├── .env.default
-├── .eslintrc.json
-├── .solhint.json
-├── .package.json
-├── .gitignore
-├── .README.md
-```
-No configuration or complicated folder structures, only the files you need to start fast. The files inside each folder (e.g., MyContract.sol, script.js) are to be considered placeholders that must be modified with your application logic and flow.
-
-* **`contracts`**: Solidity source files for Ethereum smart contracts (Solidity language). It also contains an essential contract in here called *Migrations.sol*, which is used by Truffle to handle smart contracts deployment, keeping track of changes (i.e., if no changes occur, it doesn't deploy your smart contract twice).
-* **`migrations`**: Truffle uses a migration system to manage smart contract deployments. The Truffle configuration file is located inside the project main  folder. 
-* **`mocks`**: Contains raw JSON data used to populate your smart contract after the deploy. The definition of mocked data is related to your business logic.
-* **`scripts`**: One or more JavaScript files used to interact with your smart contract after the deploy. They can use the mocked data as parameters value to pass for method calls.
-* **`test`**: One or more JavaScript files used to test the smart contracts functionalities.
-* **`shared`**: An utility custom and extensible set of classes provide a standard interface for deploying different instances of your smart contracts and sending transactions to interact with them.
+The information regarding Customers and ReClothes Dealer interactions is *publicly* available and verifiable by anyone. Instead, the information between ReClothes Dealer and Recycler(s) is *confidential*. (i.e., visible and verifiable only by the participants who took part in the interaction). 
 
 ## Getting Started
 
@@ -84,15 +35,16 @@ No configuration or complicated folder structures, only the files you need to st
 You need to have the following installed:
 
 * [git](https://git-scm.com/downloads) >= *2.21.0*
-* [node](https://nodejs.org/en/download/) >= *10.15.3*
-* [npm](https://www.npmjs.com/get-npm) >= *6.14.8*
+* [node](https://nodejs.org/en/download/) >= *10.16.0*
+* [npm](https://www.npmjs.com/get-npm) >= *6.14.4*
+* [docker](https://www.docker.com/products/docker-desktop) >= *20.10.0*
 
-### Initialization
+### Configuration
 Clone the repository and install the packages:
 
 ```bash
-git clone https://github.com/Innovation-Advisory-Links-Foundation/Ethereum-Backend-Boilerplate.git
-cd Ethereum-Backend-Boilerplate
+git clone https://github.com/Innovation-Advisory-Links-Foundation/ReClothes-Backend.git
+cd ReClothes-Backend
 npm install
 ```
 
@@ -101,71 +53,114 @@ Make a copy of the `.env.default` file and rename it `.env`. The new file will c
 ```bash
 DEV_HOST=localhost
 DEV_PORT=8545
+CHAIN_ID=2018
 ACCOUNT_NUMBER=20
-DEV_MNEMONIC="YOUR-12-WORDS-HERE-FOR-DEVELOPMENT-USAGE"
-NET_MNEMONIC="YOUR-12-WORDS-HERE-FOR-TESTNET-USAGE"
-INFURA_PROJECT_ID="YOUR-INFURA-PROJECT-ID-HERE"
+DEV_MNEMONIC="YOUR-DEVELOPMENT-MNEMONIC"
+BESU_MNEMONIC="YOUR-BESU-PRODUCTION-MNEMONIC"
+TOKEN_MANAGER_ACCOUNT="YOUR-TOKEN-MANAGER-EOA"
+RECLOTHES_DEALER_ACCOUNT="YOUR-RECLOTHES-DEALER-EOA"
+INITIAL_SUPPLY=5000000000
+RESELLING_ADDRESS="YOUR-RESELLINGCREDIT-SMART-CONTRACT-INSTANCE-ADDRESS"
+REGENERATION_ADDRESS="YOUR-REGENERATIONCREDIT-SMART-CONTRACT-INSTANCE-ADDRESS"
+RECLOTHES_SHOP_ADDRESS="YOUR-RECLOTHESSHOP-SMART-CONTRACT-INSTANCE-ADDRESS"
+ORION1_PUBLIC_KEY="YOUR-ORION1-PUBLIC-KEY"
+ORION2_PUBLIC_KEY="YOUR-ORION2-PUBLIC-KEY"
+ORION3_PUBLIC_KEY="YOUR-ORION3-PUBLIC-KEY"
+NODE1_PRIVATE_KEY="YOUR-NODE1-PRIVATE-KEY"
+NODE2_PRIVATE_KEY="YOUR-NODE2-PRIVATE-KEY"
+NODE3_PRIVATE_KEY="YOUR-NODE3-PRIVATE-KEY"
+NODE1_URL="YOUR-NODE1-HOST-AND-PORT-URL"
+NODE2_URL="YOUR-NODE2-HOST-AND-PORT-URL"
+NODE3_URL="YOUR-NODE3-HOST-AND-PORT-URL"
 ```
 
-* The `DEV_HOST` and `DEV_PORT` values are related to the Ganache node connection endpoint. 
-* The `ACCOUNT_NUMBER` indicates how many accounts are you planning to use during the development. 
-* The mnemonics are the 12-words code strings used for generating deterministic keys. Your `DEV_MNEMONIC` must refer to local development keys, and your `NET_MNEMONIC` must refer to public net development keys. 
-* The `INFURA_PROJECT_ID` is a 32 characters string used to identify your project unique identifier. (*NB.* You need to [register](https://infura.io/register) to Infura to obtain a custom provider access for Ethereum public network connection. Follow this [guide](https://www.trufflesuite.com/tutorials/using-infura-custom-provider) if you have any problems).
+* The `DEV_HOST` and `DEV_PORT` values are related to the development node connection endpoint (URL) and port. The default values are `localhost` and `8545` when using a local development Ganache node.
+* The `CHAIN_ID` indicates the unique blockchain network identifier. You need to set this value to `2018` when using a Hyperledger Besu network.
+* The `ACCOUNT_NUMBER` represents the number of Ethereum development account created using the `DEV_MNEMONIC` for Ganache local development. The default value is `20`.
+* The mnemonics are the 12-words code strings used for generating deterministic keys and are related to your Ethereum wallet. The `DEV_MNEMONIC` is used for Ganache local development, and the `BESU_MNEMONIC` is used for Besu. You could use the same mnemonic for all three fields, although it is not recommended.
+* The `TOKEN_MANAGER_ACCOUNT` and `RECLOTHES_DEALER_ACCOUNT` are the Ethereum accounts associated, respectively, to ReClothes Token Manager and Dealer roles (*NB.* The files inside the `/scripts` folder uses your wallet' first account as Token Manager and second account as ReClothes Dealer).
+* The `INITIAL_SUPPLY` indicates the amount of RSC and RGC tokens to be mint. The default value is `5000000000`.
+* The `NODE1_URL`, `NODE2_URL` and, `NODE3_URL` are the URLs of the Besu nodes (*NB.* The default values for the quickstart are `"http://localhost:20000"`, `"http://localhost:20002"` and, `"http://localhost:20004"`).
+* The `NODE1_PRIVATE_KEY`, `NODE2_PRIVATE_KEY` and, `NODE3_PRIVATE_KEY` are the private keys used to sign transactions from the Besu nodes (*NB.* The default values for the quickstart are `"8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63"`, `"c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"` and, `"ae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f"`. Note that in a real chain, the private key should not be stored").
+* The `ORION1_PUBLIC_KEY`, `ORION2_PUBLIC_KEY` and, `ORION3_PUBLIC_KEY` are the private keys used to sign confidential transactions from the Orion nodes (*NB.* The default values for the quickstart are `"A1aVtMxLCUHmBVHXoZzzBgPbW/wj5axDpW9X8l91SGo="`, `"Ko2bVqD+nNlNYL5EE7y3IdOnviftjiizpjRt+HTuFBs="` and, `"k2zXEin4Ip/qBGlRkJejnGWdP9cjkK+DAvKNW31L2C8="`).
 
-To compile your Solidity SC code (this creates a new folder `build/` containing SC schema in JSON format): 
+To compile the smart contract Solidity code (this creates a new folder `build/` containing the schema in JSON format of the smart contracts): 
 
 ```bash
 npm run compile
 ```
 
-Run ESLint to check the syntax and style of your JavaScript code.
+### Using Hyperledger Besu
+A prepackaged Docker playground consisting of a network with Hyperledger Besu nodes, correctly configured with the related Orion nodes for private transactions and IBFT2 consensus algorithm, will be used to speed up and facilitate the configuration and usage process on a local Besu network (*nb.* the network is **not** production-ready by any mean). The [Quorum Dev Quickstart](https://github.com/ConsenSys/quorum-dev-quickstart) is composed by 4 Besu validator nodes, one RPC node, respective Orion nodes for confidential transactions, a blockchain explorer ([Alethio Lite Explorer](https://github.com/Alethio/ethereum-lite-explorer)) and some optional monitoring tools ([Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/)). Every content will run on a separate Docker container. You can learn more about the quickstart at this [link](https://github.com/ConsenSys/quorum-dev-quickstart/tree/master/files/besu) or from the official Hyperledger Besu [Private Network Example](https://besu.hyperledger.org/en/stable/Tutorials/Examples/Private-Network-Example/) documentation. 
+
+To download and configure the network:
 
 ```bash
-npm run lint-js
+npx quorum-dev-quickstart
 ```
 
-Run SolHint to check the syntax and style of your Solidity code.
+The npx command will prompt a Quorum Quickstart CLI with few answers. We recommend that you give the answers in the following order `1 / N / Y / N` and press Enter next.
+
+To start your test network, open Docker, navigate in the `./quorum-test-network` directory and execute the `run.sh` script:
 
 ```bash
-npm run lint-sol
+cd ./quorum-test-network
+./run.sh # on Linux/MacOS
 ```
 
-### Local Usage
-Start a local Ganache node:
+#### Deploying ReClothes Smart Contracts
+The `/scripts` folder contains the scripts necessary to bootstrap a new instance of ReClothes smart contracts on your Besu network and some additional files for executing mock interactions. Each script will show your terminal the deployed smart contracts (if any) and feedback for the subsequent interactions. Alternatively, you can create your custom scripts or use other mechanisms to bootstrap the ReClothes smart contracts.
+
+
+The `/scripts/initializeReclothes.js` script will deploy the ERC20 tokens smart contract implementation (`/contracts/ResellingCredit.sol` and `/contracts/RegenerationCredit.sol`) from the Token Manager account and the ReClothes public on-chain business logic (`/contracts/ReclothesShop.sol`) from the Reclothes Dealer account. The script will also interact with the contracts for token distribution and for registering two Customers and two Recyclers (*nb.* the account used are, respectively, the third and fourth for the Customers and the fifth and sixth for the Recyclers from your wallet). 
+
+```bash
+npm run initialize-reclothes
+```
+
+**Copy these smart contract addresses and paste them on the respective** `.env` **key-value pair**.
+
+Run the `/scripts/mockPublicInteractions.js` script to populate the smart contracts with public interactions between Customers and Dealer.
+ 
+```bash
+npm run mock-public-interactions
+```
+
+Before running private mock interactions, you need to compile the smart contracts and obtaining the binaries:
+
+```bash
+npm run solcjs-binaries
+```
+
+Run the `/scripts/mockPrivateInteractions1.js` script to create a private connection (group) between Recycler1 and ReClothes Dealer to perform confidential interactions on a private instance of ReClothes smart contract (`/contracts/PrivateReclothesShop.sol`). The private transactions are signed and executed using the respectively Orion nodes. 
+ 
+```bash
+npm run mock-private-interactions1
+```
+
+Run the `/scripts/mockPrivateInteractions2.js` script to create a private connection (group) between Recycler2 and ReClothes Dealer to perform confidential interactions on a private instance of ReClothes smart contract (`/contracts/PrivateReclothesShop.sol`). The private transactions are signed and executed using the respectively Orion nodes. 
+ 
+```bash
+npm run mock-private-interactions2
+```
+
+### Using Ganache
+You can start a local Ganache node.
 
 ```bash
 npm run ganache
 ```
 
-Migrate (deploy) your smart contracts:
+Migrate (deploy) the ReClothes smart contracts. This script will deploy the ERC20 tokens smart contract implementation (`/contracts/ResellingCredit.sol` and `/contracts/RegenerationCredit.sol`) from the Token Manager account (first Ganache account) and the ReClothes on-chain business logic (`/contracts/ReclothesShop.sol`) from the Reclothes Dealer account (second Ganache account).
 
 ```bash
-npm run deploy-dev
+npm run migrate
 ```
 
-You can run a script (specify your script file name in `package.json`):
-
-```bash
-npm run script-dev
-```
-
-You can run tests:
+You can run tests on the smart contracts.
 
 ```bash
 npm run test
-```
-
-### Public Network Usage
-Migrate (deploy) your smart contracts. The migration will happen on the public network specified in the `truffle-config.js` file (default: *ropsten*):
-
-```bash
-npm run deploy-net
-```
-
-You can run a script (specify your script file name in `package.json`). May take a while due to gas pricing and network latency:
-
-```bash
-npm run script-net
 ```
 
 ##  Development Rules
@@ -224,7 +219,7 @@ Examples:
     git branch -b style/header
 
 ## License
-This repository is released under the [MIT](https://github.com/Innovation-Advisory-Links-Foundation/Ethereum-Backend-Boilerplate/blob/master/LICENSE) License.
+This repository is released under the [MIT](https://github.com/Innovation-Advisory-Links-Foundation/ReClothes-Backend/blob/main/LICENSE) License.
 
 ---
-Ethereum Backend Boilerplate © 2020+, [LINKS Foundation](https://linksfoundation.com/)
+ReClothes Backend © 2020+, [LINKS Foundation](https://linksfoundation.com/)
