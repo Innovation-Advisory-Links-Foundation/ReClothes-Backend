@@ -8,6 +8,7 @@
     "solhint": "solhint ./contracts/*.sol --fix",
     "compile": "rm -fr build && solhint ./contracts/*.sol --fix && truffle compile",
     "solcjs-binaries": "solcjs --bin --base-path . ./contracts/*.sol  --abi --optimize --overwrite -o ./contracts/binaries/",
+    "migrate": "truffle migrate --network development",
     "test": "truffle test --network development",
     "initialize-reclothes": "truffle exec ./scripts/initializeReclothes.js --network besu",
     "mock-public-interactions": "truffle exec ./scripts/mockPublicInteractions.js --network besu",
