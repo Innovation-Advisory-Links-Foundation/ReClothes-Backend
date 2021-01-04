@@ -11,6 +11,20 @@ You can learn more about the main challenges of the fashion sector and our solut
 
 To learn more about ReClothes smart contracts, check the [README](https://github.com/Innovation-Advisory-Links-Foundation/ReClothes-Backend/blob/main/contracts/README.md) in the `/contracts` folder.
 
+## Table of Contents
+- [Workflow](#workflow)
+- [Backend](#backend)
+- [Getting Started](#getting-started)
+    - [Prerequisities](#prerequisities)
+    - [Configuration](#configuration)
+    - [Using Hyperledger Besu](#using-hyperledger-besu)
+    - [Deploying ReClothes Smart Contracts](#deploying-reclothes-smart-contracts)
+    - [Using Ganache](#using-ganache)
+- [Development Rules](#development-rules)
+    - [Commit](#commit)
+    - [Branch](#branch)
+- [License](#license)
+
 ## Workflow
 
 <div align="center">
@@ -28,6 +42,9 @@ Figure 1 shows a high-level representation of the actors and the workflow of the
 * **Customers**: who represents people interested in sending second-hand clothes and/or buying upcycled clothes.
 
 The information regarding Customers and ReClothes Dealer interactions is *publicly* available and verifiable by anyone. Instead, the information between ReClothes Dealer and Recycler(s) is *confidential*. (i.e., visible and verifiable only by the participants who took part in the interaction). 
+
+## Backend
+A complete and customizable backend built using the [Truffle](https://www.trufflesuite.com) suite. The entire on-chain business logic for the ReClothes dApp is written in [Solidity](https://solidity.readthedocs.io/) smart contracts and can be released in development or production-like networks. You can run an EVM-based blockchain node using the [Ganache-CLI](https://github.com/trufflesuite/ganache-cli) to test smart contract functionalities without paying any fee. You can run a prepackaged Docker playground, simulating a production-like release, consisting of a network with [Hyperledger Besu](https://besu.hyperledger.org/en/stable/) nodes configured for private transactions using a private transaction manager ([Orion](https://besu.hyperledger.org/en/stable/HowTo/Use-Privacy/Run-Orion-With-Besu/)). A customizable [utility class](https://github.com/Innovation-Advisory-Links-Foundation/ReClothes-Backend/blob/main/shared/utils.js) helps you carry out tests and deploy smart contract instances and populate them, using simple scripts written in JavaScript, using mock data in JSON format.
 
 ## Getting Started
 
